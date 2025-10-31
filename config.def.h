@@ -15,7 +15,7 @@ static const int showsystray               = 1; /* 0 means no systray */
 static const int showbar                   = 1; /* 0 means no bar */
 static const int topbar                    = 1; /* 0 means bottom bar */
 static const int centeredtitle             = 1; /* 1 means centered title */
-static const char *fonts[] = { "Monaspace Krypton:size=8", "monospace:size=10" };
+static const char *fonts[] = { "Monocraft:size=10:antialias=true:autohint=true" };
 static const float rootcolor[]		   = COLOR(0x0a0a0aff);
 
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
@@ -46,6 +46,9 @@ static const char *const autostart[] = {
         "wbg", "-s", "/home/aolx/documents/self/Me/Walls/591.png", NULL,
 	"wlr-randr", "--output", "DP-1", "--mode", "3440x1440@165.000", "--left-of", "DP-2", NULL,
 	"wlr-randr", "--output", "DP-2", "-mode", "1920x1080@143.981", NULL,
+	"gammastep", "-O", "2500", NULL,
+	"systemctl", "--user", "import-environment", "WAYLAND_DISPLAY", "XDG_CURRENT_DESKTOP", NULL,
+	"dbus-update-activation-environment", "--systemd", "WAYLAND_DISPLAY", "XDG_CURRENT_DESKTOP", NULL,
         NULL /* terminate */
 };
 
@@ -151,7 +154,7 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 
 /* commands */
 static const char *termcmd[] = { "ghostty", NULL };
-static const char *menucmd[] = { "wmenu-run", NULL };
+static const char *menucmd[] = { "wmenu-run", "-s", "6D6D6Dff", "-S", "bdae93ff", "-n", "343434ff", "-N", "bdae93ff", "-l", "10", "-f", "Monocraft 10" , NULL };
 static const char *dmenucmd[] = { "wmenu", NULL };
 
 static const Key keys[] = {
@@ -177,10 +180,17 @@ static const Key keys[] = {
 	{ MODKEY,					XKB_KEY_f,          togglefullscreen, {0} },
 	// { MODKEY,					XKB_KEY_0,          view,           {.ui = ~0} },
 	// { MODKEY|WLR_MODIFIER_SHIFT,			XKB_KEY_parenright, tag,            {.ui = ~0} },
-	{ MODKEY,					XKB_KEY_Left,       focusmon,       {.i = WLR_DIRECTION_LEFT} },
-	{ MODKEY,					XKB_KEY_Right,      focusmon,       {.i = WLR_DIRECTION_RIGHT} },
-	{ MODKEY|WLR_MODIFIER_SHIFT,			XKB_KEY_Left,       tagmon,         {.i = WLR_DIRECTION_LEFT} },
-	{ MODKEY|WLR_MODIFIER_SHIFT,			XKB_KEY_Right,      tagmon,         {.i = WLR_DIRECTION_RIGHT} },
+	
+	// Vim Keys
+	{ MODKEY,					XKB_KEY_h,          focusmon,       {.i = WLR_DIRECTION_LEFT} },
+	{ MODKEY,					XKB_KEY_l,          focusmon,       {.i = WLR_DIRECTION_RIGHT} },
+	{ MODKEY|WLR_MODIFIER_SHIFT,			XKB_KEY_H,          tagmon,         {.i = WLR_DIRECTION_LEFT} },
+	{ MODKEY|WLR_MODIFIER_SHIFT,			XKB_KEY_L,          tagmon,         {.i = WLR_DIRECTION_RIGHT} },
+	{ MODKEY,					XKB_KEY_j,          focusstack,     {.i = +1} },
+	{ MODKEY,					XKB_KEY_k,          focusstack,     {.i = -1} },
+	{ MODKEY|WLR_MODIFIER_CTRL,			XKB_KEY_h,          setmfact,       {.f = -0.05f} },
+	{ MODKEY|WLR_MODIFIER_CTRL,			XKB_KEY_l,          setmfact,       {.f = +0.05f} },
+
 	TAGKEYS(          XKB_KEY_1, XKB_KEY_exclam,                     0),
 	TAGKEYS(          XKB_KEY_2, XKB_KEY_at,                         1),
 	TAGKEYS(          XKB_KEY_3, XKB_KEY_numbersign,                 2),

@@ -3392,7 +3392,8 @@ updatemons(struct wl_listener *listener, void *data)
 	}
 
 	if (stext[0] == '\0')
-		//strncpy(stext, "dwl-"VERSION, sizeof(stext));
+		strncpy(stext, "dwl-"VERSION, sizeof(stext));
+
 	wl_list_for_each(m, &mons, link) {
 		updatebar(m);
 		drawbar(m);
